@@ -1,2 +1,3 @@
 # leetcode_exercise
-do some exercises
+A novice and novice's practice diary
+Let's witness my growth！
