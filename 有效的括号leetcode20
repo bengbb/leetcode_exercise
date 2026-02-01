@@ -1,0 +1,74 @@
+给定一个只包括 '('，')'，'{'，'}'，'['，']' 的字符串 s ，判断字符串是否有效。
+有效字符串需满足：
+左括号必须用相同类型的右括号闭合。
+左括号必须以正确的顺序闭合。
+每个右括号都有一个对应的相同类型的左括号。
+
+我的想法：定义一个栈"sstack"，用来存储s中的左括号，然后遍历s，遇到左括号就入栈，遇到右括号就将栈顶元素提出并且和s对比，看是否匹配。
+初步代码（错误❌）bool isValid(char* s) {
+    int top=0;
+    char sstack[sizeof(s)];                      错误1：s 是 char*（指针），在 64 位系统上 sizeof(s) 通常是 8（指针大小），32 位是 4。这和字符串的实际长度完全无关！ 
+   for(int i = 0 ; i<sizeof(s) ; i++ ){          比如输入 "()"（长度 2），但 sizeof(s) = 8，会多循环 6 次，读到非法内存！应该用strlen(s)
+if(s[i]=='('||'{'||'['){                         错误2：这行代码永远为真。因为 '{' 和 '[' 是非零字符（ASCII 值 > 0），在 C 中视为 true
+    sstack[top]=s[i];
+    top++;
+    }
+    else{
+        while(top!=0){                         错误3：用 while 处理右括号，但实际上 每个右括号只应匹配一个左括号，不需要循环！
+if(s[i]==')'&&sstack[top]=='(')                错误4：用 top 表示“下一个要插入的位置”，所以栈顶元素是 sstack[top - 1]。但在 else 分支中写的是 sstack[top]，
+        top--;                                 这会访问未初始化的内存，甚至越界
+else if(s[i]=='}'&&sstack[top]=='{')
+        top--;
+else if(s[i]==']'&&sstack[top]=='[')
+        top--;
+else return false;
+        }
+
+    } 
+    }return true;
+}
+
+
+修改后代码（正确✔）
+bool isValid(char* s) {
+    int top=0;//栈顶指针
+    char sstack[strlen(s)];
+    for(int i = 0 ; i<strlen(s) ; i++ ){
+if(s[i]=='('||s[i]=='{'||s[i]=='['){
+    sstack[top]=s[i];
+    top++;//循环找左括号并且入栈
+    }
+    else{//找到右括号
+        if(top == 0)return false;//栈顶空直接false
+if(s[i]==')'&&sstack[top-1]=='(')
+        top--;
+else if(s[i]=='}'&&sstack[top-1]=='{')
+        top--;
+else if(s[i]==']'&&sstack[top-1]=='[')
+        top--;//右括号和栈顶左括号匹配，出栈并且进入i++
+else return false;//不匹配则false
+        }
+    }return top==0;//结束时栈为空
+}
+时间复杂度：用了一层循环O(n)
+空间复杂度：辅助数组sstack，O(n)
+
+低空复解法：
+bool isValid(char* s) {
+    int top = 0; // 直接把 s 当作栈
+    for (int i = 0; s[i]; i++) {
+        char c = s[i];
+        if (c == '(') {
+            s[top++] = ')'; // 入栈对应的右括号，替换原来的左括号，这样就可以直接和字符串对比
+        } else if (c == '[') {
+            s[top++] = ']';
+        } else if (c == '{') {
+            s[top++] = '}';
+        } else if (top == 0 || s[--top] != c) { // c 是右括号
+            return false; // 没有左括号，或者左括号类型不对
+        }
+    }
+    return top == 0; // 所有左括号必须匹配完毕
+}来自灵茶山艾府，谢谢大神的代码！
+
+
