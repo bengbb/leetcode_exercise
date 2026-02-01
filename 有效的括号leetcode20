@@ -71,4 +71,3 @@ bool isValid(char* s) {
     return top == 0; // 所有左括号必须匹配完毕
 }来自灵茶山艾府，谢谢大神的代码！
 
-
