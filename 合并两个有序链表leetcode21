@@ -1,0 +1,46 @@
+将两个升序链表合并为一个新的 升序 链表并返回。新链表是通过拼接给定的两个链表的所有节点组成的。 
+示例 1：
+输入：l1 = [1,2,4], l2 = [1,3,4]
+输出：[1,1,2,3,4,4]
+
+我的解答（错误❌）
+struct ListNode* mergeTwoLists(struct ListNode* list1, struct ListNode* list2) {
+  struct ListNode dummy;
+  struct ListNode* new = dummy;    错误1：指针new只能指地址，需要用取地址符。如int x = 10;int* p = &x; 
+  while(list1&&list2){              
+    if(list1->val < list2->val){
+        new -> next = list1;
+        list1 = list1 -> next;
+    }
+    else{
+        new->next = list2;
+        list2=list2->next;
+    }
+    new = new->next;
+  }
+  if(list1 == NULL)new->next = list2;  错误2：逻辑冗余了。用 new->next = list1 ? list1 : list2;
+  if(list2 == NULL)new->next = list1;
+  return dummy.next;
+}
+
+修改后
+struct ListNode* mergeTwoLists(struct ListNode* list1, struct ListNode* list2) {
+    struct ListNode dummy;      // 虚拟头节点（不存储真实数据）
+    struct ListNode* new = &dummy; // new 指向当前合并链表的尾部
+
+    while (list1 && list2) {
+        if (list1->val < list2->val) {
+            new->next = list1;
+            list1 = list1->next;
+        } else {
+            new->next = list2;
+            list2 = list2->next;
+        }
+        new = new->next; // 移动 new 到新尾部
+    }
+
+    // 将剩余部分直接接上（只有一个非空，或都空）
+    new->next = list1 ? list1 : list2;
+
+    return dummy.next; // 返回真实头节点
+}
