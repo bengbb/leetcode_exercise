@@ -1,0 +1,13 @@
+给定一个二叉树，判断它是否是 平衡二叉树  
+示例 1：
+输入：root = [3,9,20,null,null,15,7]
+输出：true
+
+int getheight(struct TreeNode* root){                            //用来获得子树高度的函数
+    if (root == NULL)return 0;
+    else return fmax(getheight(root->left),getheight(root->right))+1; //递归，子树高度等于MAX{root->left,root->right}+1
+}
+bool isBalanced(struct TreeNode* root) {
+    if(root==NULL)return true;
+    else return fabs(getheight(root->left)-getheight(root->right))<=1 && isBalanced(root->left)&&isBalanced(root->right);//当根节点左右子树高度之差的绝对值小于等于1且左右子树分别为平衡二叉树时返回true。
+    }
