@@ -1,0 +1,12 @@
+利用乌龟兔子指针，兔子指针快，乌龟慢，如果兔子从后面超过乌龟，则有环。
+
+bool hasCycle(struct ListNode *head) {     //判断一个链表有无环形的函数
+    struct ListNode* slow = head;          //乌龟指针   
+    struct ListNode* fast = head;          //兔子指针
+    while(fast&&fast->next){               //只用判断兔子指针是否为空，因为乌龟走的都是兔子走过的
+        slow = slow->next;
+        fast = fast->next->next;
+        if(slow == fast)return true;       //套圈则有环
+    }
+    return false;                          //出循环说明兔子指针到头了，则无环
+}
