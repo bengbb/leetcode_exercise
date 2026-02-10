@@ -1,0 +1,25 @@
+bool canConstruct(char* ransomNote, char* magazine) {
+    int n = strlen(ransomNote) , m = strlen(magazine);
+    int cnt[26]={};
+    for(int i = 0 ; i < m ; i++)
+    cnt[magazine[i]-'a']++;
+    for(int i = 0 ; i < n;i++)
+    cnt[ransomNote[i]-'a']--;
+    for(int i = 0 ; i < n ; i++){
+        if(cnt[ransomNote[i]-'a'] < 0){
+            return false;
+        }
+    }
+            return true;
+}
+
+优化后
+bool canConstruct(char* ransomNote, char* magazine) {
+    int n = strlen(ransomNote) , m = strlen(magazine);
+    int cnt[26]={};
+    for(int i = 0 ; i < m ; i++)
+    cnt[magazine[i]-'a']++;
+    for(int i = 0 ; i < n;i++)
+    if(--cnt[ransomNote[i]-'a']<0)return false;//将两个循环并在一起
+          return true;
+}
