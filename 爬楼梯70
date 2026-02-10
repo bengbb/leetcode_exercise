@@ -6,3 +6,14 @@ int climbStairs(int n) {
     }
     return f[n];
 }
+
+改进
+int climbStairs(int n) {
+    int p =0,q=0,t=1; //用三个数字代替数组
+    for(int i = 1 ; i <= n ; i++ ){
+        p=q;
+        q=t;
+        t = p+q;
+    }
+    return t;
+}
