@@ -1,0 +1,48 @@
+//我的解答（错误）
+int longestPalindrome(char* s) {
+    int cnt[52]={};
+    int len = strlen(s);
+    int ans = 0;
+    for(int i = 0 ; i < len ; i++ ){
+        cnt[s[i]-'a']++;//错误 1：字符映射范围错误（严重！）'A' - 'a' = -32 → 访问 cnt[-32] → 数组越界！
+    }
+     for(int i = 0 ; i < len ; i++ ){//cnt 数组大小是 52（你打算存 52 个字母）但你用 len（字符串长度）作为循环上限如果 len > 52（比如字符串很长），就会访问 cnt[52] 及之后 → 越界！                                 
+            if(cnt[i]%2 == 0){       //     ✅ 正确做法：遍历整个 cnt 数组（0 到 51）如果 len < 52，则漏掉部分字母（比如只遍历前 10 个 cnt 元素）
+            ans = ans+cnt[i];
+        }
+        else if(cnt[i]>=1&&cnt[i]%2 != 0)
+        ans = ans+cnt[i]-1;
+          }
+          for(int i = 0 ; i < len ; i++ ){
+            if(cnt[i]==1){
+                ans++;
+                break;
+            }
+          }
+          return ans;
+    }
+
+好解答
+int longestPalindrome(char* s) {
+    int cnt[128] = {0};//直接包括了小写和大写
+    for (int i = 0; s[i]; i++) {
+        cnt[s[i]]++;
+    }
+    
+    int ans = 0;
+    for (int i = 0; i < 128; i++) {
+        ans += cnt[i] / 2 * 2; // 偶数部分
+    }
+    
+    // 如果总长度小于原字符串，说明有奇数字符，可加中心
+    return ans < strlen(s) ? ans + 1 : ans;
+}
+
+
+ ans += cnt[i] / 2 * 2;等价
+if (cnt[i] % 2 == 0)
+    use = cnt[i];
+else
+    use = cnt[i] - 1;
+
+可以直接取最大偶数。
