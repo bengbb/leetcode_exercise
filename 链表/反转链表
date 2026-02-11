@@ -1,0 +1,12 @@
+struct ListNode* reverseList(struct ListNode* head) {
+    struct ListNode* cur = head;
+    struct ListNode* pre =  NULL;
+    while(cur){
+        struct ListNode* nxt = cur->next;
+        cur -> next = pre;
+        pre = cur;
+        cur = nxt;
+    }
+    return pre;
+}
+创建一个新链表，用pre指针指向队首
