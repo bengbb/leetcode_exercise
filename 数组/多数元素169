@@ -1,7 +1,7 @@
 摩尔投票法
 int majorityElement(int* nums, int numsSize) {
     int candidate = nums[0];
-    int count;
+    int count = 1;
     for(int i = 0 ; i < numsSize ; i++ ){
         if(nums[i] == candidate )
         count++;// 同一阵营，+1
