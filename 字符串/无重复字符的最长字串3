@@ -1,0 +1,14 @@
+int lengthOfLongestSubstring(char* s) {
+    int ans = 0 ;
+    int left = 0;
+    int cnt[128] = {};//初始化为 0
+    for(int right = 0 ; s[right] ; right++ ){//right 是窗口右边界（闭区间）
+        cnt[s[right]]++;
+        while(cnt[s[right]] > 1){// 当前字符 c 出现超过 1 次 → 有重复！
+            cnt[s[left]]--;// 移除窗口最左边的字符
+            left++;// 左边界右移，缩小窗口
+        }ans = (ans>(right - left+1)?ans:(right - left+1));
+    }
+    return ans;
+}
+窗口滑动第一次做有点难
