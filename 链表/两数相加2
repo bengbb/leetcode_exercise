@@ -1,0 +1,42 @@
+我的错误解答
+struct ListNode* addTwoNumbers(struct ListNode* l1, struct ListNode* l2) {
+    struct ListNode dummy;
+    struct ListNode* cur = &dummy;//错误 2：cur指向未分配内存的节点
+    int count = 0;
+    int add;
+    while(l1){//❌ 错误 1：未处理 l2 为空或长度不同的情况
+        add = l1->val + l2->val;//错误 3：进位计算逻辑错误
+        add = add%10; // ❌ 提前取模，丢失原始和
+        cur->val = add+count;//❌ 进位加在取模后？顺序错！
+        count = add/10;❌ add 已经是 %10 后的值，/10 永远是 0！
+        l1 = l1->next;
+        l2 = l2->next;
+        cur = cur->next;//错误 4：返回了错误的指针
+    }
+    return cur;
+}
+
+正确解答
+struct ListNode* addTwoNumbers(struct ListNode* l1, struct ListNode* l2) {
+    struct ListNode dummy;
+    struct ListNode* cur = &dummy;
+    int carry = 0;
+    while(l1 || l2 || carry){
+        if(l1){
+            carry = carry + l1->val;
+            l1 = l1 -> next;
+        }
+        if(l2){
+            carry = carry + l2->val;
+            l2 = l2->next;
+        }
+        cur=cur->next=malloc(sizeof(struct ListNode));
+/*等价于struct ListNode* temp = malloc(sizeof(struct ListNode)); // 1. 分配新节点
+cur->next = temp;                                       // 2. 链接到当前末尾
+cur = temp;                                             // 3. cur 移动到新节点*/
+        cur->val = carry%10;
+        carry = carry/10;
+    }
+    cur->next = NULL;
+    return dummy.next;
+}
