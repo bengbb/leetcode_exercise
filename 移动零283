@@ -1,0 +1,26 @@
+我的解答
+void moveZeroes(int* nums, int numsSize) {
+    int k = 0 ;
+    for( int i = 0 ; i < numsSize ; i++ ){
+        if( nums[i] != 0 ){
+            nums[k++] = nums[i];//将非零元素记录下来
+        }
+    }
+    for(int i = numsSize-1;i>=k;i--){//再用一个循环将后面的数变回零
+        nums[i]=0;
+    }
+}
+多用了一个循环
+好方法
+void moveZeroes(int* nums, int numsSize) {
+    int i0 = 0;
+    for (int i = 0; i < numsSize; i++) {
+        if (nums[i]) {
+            // 交换 nums[i] 和 nums[i0]
+            int tmp = nums[i];
+            nums[i] = nums[i0];
+            nums[i0] = tmp;
+            i0++;//如果不是零，就和i0交换
+        }
+    }
+}
