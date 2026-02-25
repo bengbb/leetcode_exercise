@@ -1,0 +1,33 @@
+int length(struct ListNode* head){
+    int length=0;
+    while(head != NULL){
+        head = head -> next;
+        length++;
+    }
+    return length;
+}
+
+struct ListNode* removeNthFromEnd(struct ListNode* head, int n) {
+    struct ListNode dummy;
+    dummy.next = head;
+    struct ListNode* cur = &dummy;
+    int l = length(head);
+    int count = l-n+1;
+    while((count-1) != 0){
+        cur = cur -> next;
+        count--;
+    }
+    struct ListNode* nxt = cur -> next;
+    cur -> next = cur -> next -> next;
+    free(nxt);
+    return dummy.next;
+}
+
+另一种找倒数第N个结点的方法 
+ while (n--) {
+        right = right->next; // 右指针先向右走 n 步
+    }
+    while (right->next) {
+        left = left->next;
+        right = right->next; // 左右指针一起走
+    }
