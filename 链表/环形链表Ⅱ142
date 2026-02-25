@@ -1,0 +1,19 @@
+struct ListNode *detectCycle(struct ListNode *head) {
+    struct ListNode* slow = head;
+    struct ListNode* fast = head;
+    while(fast && fast->next){
+        slow = slow -> next;
+        fast = fast -> next -> next;
+        if(fast == slow){
+            while(head != slow){
+                head = head -> next;
+                slow = slow -> next;
+            }
+            return head;
+        }
+    }
+            return NULL;
+}
+设a为从head到入环口，k为fast指针多转的圈数
+kc−a 是从入环口开始的步数。因为 (kc−a)+a=kc，所以从 kc−a 开始，再走 a 步，就可以走满 k 圈。
+慢指针从相遇点开始，移动 a 步后恰好走到入环口，但在这个过程中，可能会多次经过入环口。
