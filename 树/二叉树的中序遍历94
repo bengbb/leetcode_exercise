@@ -1,0 +1,14 @@
+void inorder(struct TreeNode* root,int* res,int* resSize){
+    if(root == NULL)
+    return;
+    inorder(root->left,res,resSize);
+    res[(*resSize)++] = root->val;
+    inorder(root->right,res,resSize);
+}
+int* inorderTraversal(struct TreeNode* root, int* returnSize) {
+    int* res = malloc(sizeof(int)*2000);
+    *returnSize = 0;
+    inorder(root,res,returnSize);
+    return res;
+}
+和先序后序一个意思
