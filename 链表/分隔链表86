@@ -1,0 +1,20 @@
+struct ListNode* partition(struct ListNode* head, int x) {
+    struct ListNode* small = malloc(sizeof(struct ListNode));
+    struct ListNode* large = malloc(sizeof(struct ListNode));
+    struct ListNode* smallhead = small;
+    struct ListNode* largehead = large;//维护两个链表，分别用来记录小于和大于等于
+    while(head != NULL){
+        if(head->val < x){
+            small -> next = head;
+            small = small -> next;
+        }
+        else{
+            large -> next = head;
+            large = large -> next;
+        }
+        head = head -> next;
+    }
+    large -> next = NULL;
+    small -> next = largehead->next;
+    return smallhead -> next;
+}
