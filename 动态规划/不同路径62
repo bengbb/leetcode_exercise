@@ -1,0 +1,16 @@
+int uniquePaths(int m, int n) {
+    int f[m][n];//用一个二维数组来维护动态规划函数
+    for(int i = 0 ; i < m ; i++){
+        f[i][0] = 1;
+    }
+    for(int j = 0 ; j < n ; j++){
+        f[0][j] = 1;
+    }
+    for(int i = 1 ; i < m ; i++){
+        for(int j = 1 ; j < n ; j++){
+            f[i][j] = f[i-1][j] + f[i][j-1];//到最右下角只有两种可能，从上往下或者从左往右
+        }
+    }
+    return f[m-1][n-1];
+    }
+动态规划题，重点是找到能够推出最后一点的函数
