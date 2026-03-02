@@ -1,0 +1,11 @@
+int lengthOfLastWord(char* s) {
+    int i = strlen(s)-1;//先用一个指针从后往前找到最后一个单词的最后一个字符
+    while(s[i] == ' '){
+        i--;
+    }
+    int j = i-1 ;//再用另一个指针找到开头字符
+    while(j>=0 && s[j] != ' '){
+        j--;
+    }
+    return (i-j);
+}
