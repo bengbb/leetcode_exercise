@@ -1,0 +1,37 @@
+我的初步解答（错）
+int mySqrt(int x) {
+    if(x == 0) return 0;
+    int left = 1 ; 
+    int right = x;
+    while(left < right){
+         int mid = (left + right)/2;
+         if(mid*mid == x)// 当 x 接近 INT_MAX 时，mid*mid 会溢出！
+            return mid;
+        else if(mid*mid > x){
+            right = mid -1;
+        }
+        else{
+            left = mid + 1;//当 mid*mid < x 但 (mid+1)*(mid+1) > x 时，mid 就是答案，但却跳过了它！
+        }
+    }
+    return left-1;
+}
+解答
+int mySqrt(int x) {
+    if (x == 0) return 0;
+    int left = 1;
+    int right = x;
+    
+    while (left < right) {
+        int mid = left + (right - left + 1) / 2; //  向上取整，避免死循环
+        
+        if (mid > x / mid) { // 等价于 mid*mid > x，且不溢出
+            right = mid - 1;
+        } else {
+            left = mid; //  保留 mid，因为它可能是答案
+        }
+    }
+    return left;
+}
+
+闭区间，求最小的题目返回 left，求最大的题目返回 right
