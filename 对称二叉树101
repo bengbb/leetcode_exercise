@@ -1,0 +1,10 @@
+bool issame(struct TreeNode*p,struct TreeNode* q){
+    if(p == NULL || q == NULL){
+        return p==q;
+    }
+    return p->val == q->val && issame(p->left,q->right) && issame(p->right,q->left);//把输入的二叉树拆分成左子树 p 和右子树 q。需要判断 p 和 q 是否互为镜像。
+}
+bool isSymmetric(struct TreeNode* root) {
+    if(root == NULL) return true;
+    return issame(root->left,root->right);
+}
