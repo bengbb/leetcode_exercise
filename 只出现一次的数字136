@@ -1,0 +1,28 @@
+我的错误解法
+int singleNumber(int* nums, int numsSize) {
+    int* cnt = (int*)malloc(sizeof(int)*30000);//数组大小不足
+    for(int i = 0 ; i < 30000 ; i++){
+        cnt[i]=0;
+    }
+    for(int i = 0 ; i < numsSize ; i++){
+        cnt[nums[i]]++;//	负数导致越界崩溃
+    }
+    for(int i = 0 ; i < 30000 ; i++){
+        if(cnt[i] == 1)
+        return i;
+    }
+    return 0;
+}
+标准解法
+int singleNumber(int* nums, int numsSize) {
+    int ans = nums[0];
+    for(int i = 1 ; i < numsSize ; i++){
+        ans = ans^nums[i];//使用异或来实现
+    }
+    return ans;
+}​
+如4⊕1⊕2⊕1⊕2
+=4⊕(1⊕1)⊕(2⊕2)
+=4⊕0⊕0
+=4
+​
