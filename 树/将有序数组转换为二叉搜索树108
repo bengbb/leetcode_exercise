@@ -1,0 +1,14 @@
+struct TreeNode* dfs(int* nums,int left,int right){
+   if(left == right)//左闭右开区间
+   return NULL;
+    struct TreeNode* head = malloc(sizeof(struct TreeNode));
+    int mid = (left+right)/2;
+    head -> val = nums[mid];
+    head -> left = dfs(nums , left , mid);//左子树是 [left, mid)，右子树是 [mid+1, right）。因为取中点会偏向左边，所以（left,mid）可以实现[left, mid)；右边同理。
+    head -> right = dfs(nums ,mid+1,right);
+    return head;
+}
+struct TreeNode* sortedArrayToBST(int* nums, int numsSize) {
+    return dfs(nums,0,numsSize);
+}
+递归思路以及递归时对区间的使用值得学习
