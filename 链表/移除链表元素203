@@ -1,0 +1,16 @@
+struct ListNode* removeElements(struct ListNode* head, int val) {
+    struct ListNode dummy;
+    struct ListNode* l = &dummy;
+    dummy.next = head;
+    while(l -> next != NULL){
+        if(l->next->val == val){
+            struct ListNode* q = l -> next;
+            l->next = l->next->next;
+            free(q);
+        }
+       else{
+        l = l->next;//没进if就让l去下一个，进if的话删除节点后就相当于l=l->next
+       }
+    }
+    return dummy.next;
+}
