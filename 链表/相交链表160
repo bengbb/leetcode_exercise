@@ -1,0 +1,15 @@
+struct ListNode *getIntersectionNode(struct ListNode *headA, struct ListNode *headB) {
+    struct ListNode* l = headA;
+    struct ListNode* q = headB;
+    while(headA != headB){
+        if(headA  != NULL)
+            headA = headA -> next;
+        else headA = q;
+         if(headB != NULL)
+            headB = headB -> next;
+        else headB = l;
+    }
+    return headA;
+}
+
+简单说就是（x+z）+y = （x+y）+z
