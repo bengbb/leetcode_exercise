@@ -1,0 +1,14 @@
+一刷，借鉴答案
+double findMaxAverage(int* nums, int numsSize, int k) {
+    int ans = INT_MIN;//维护最大总和
+    int sum = 0;//计算当前总和
+    for(int i = 0 ; i < numsSize ; i++){//窗口右边
+    sum = sum + nums[i];//右边进窗口
+    if(i-k+1 < 0){//还没到要求长度（只有到了要求长度的窗口后才需要计算最大值和减去窗口左边出窗口的值）
+        continue;
+    }
+    ans = fmax(ans,sum);//取最大值
+    sum = sum - nums[i-k+1];//左边出窗口
+}
+    return (double)ans/k;
+}
