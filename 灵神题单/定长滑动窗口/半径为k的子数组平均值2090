@@ -1,0 +1,16 @@
+int* getAverages(int* nums, int numsSize, int k, int* returnSize) {
+    long long sum = 0;
+    int* ans = (int*)malloc(sizeof(int)*numsSize);
+    *returnSize = numsSize;
+    memset(ans,-1,sizeof(int)*numsSize);//初始化函数，可以记一下
+    for(int i =0; i < numsSize ; i++){//右窗口
+        sum = sum + nums[i];
+        int left = i-2*k;//灵活调整"left = i-k+1;"
+        if(left < 0){
+            continue;
+        }
+        ans[i-k] = sum/(2*k+1);
+        sum = sum - nums[left];
+    }
+    return ans;
+}
