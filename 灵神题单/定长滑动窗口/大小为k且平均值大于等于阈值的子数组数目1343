@@ -1,0 +1,18 @@
+int numOfSubarrays(int* arr, int arrSize, int k, int threshold) {
+    int count = 0;
+    int sum = 0;
+    for(int i = 0 ; i < arrSize ; i++){//窗口右边
+    sum = sum + arr[i];
+    int left = i-k+1;
+    if(left < 0){
+        continue;
+    }
+    int avg = sum/k ;
+    if(avg >= threshold){
+        count++;
+    }
+    sum = sum - arr[left];
+    }
+    return count;
+}
+同模板简单
