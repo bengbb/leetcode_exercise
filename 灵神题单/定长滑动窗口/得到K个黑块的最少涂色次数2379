@@ -1,0 +1,19 @@
+int minimumRecolors(char* blocks, int k) {
+    int cnt = 0;//用来找白色块最少的窗口
+    int ans = INT_MAX;
+    for(int i = 0 ; i < strlen(blocks) ; i++){
+        if(blocks[i] == 'W'){
+            cnt++;
+        }
+        int left = i-k+1;
+        if(left < 0){
+            continue;
+        }
+        ans = ans < cnt ? ans:cnt;
+        if(blocks[left] == 'W'){
+            cnt--;
+        }
+    }
+    return ans;
+}
+此题关键是要发现题干等于要找定长滑动窗口内的最少白色块数量
